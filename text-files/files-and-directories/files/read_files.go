@@ -1,0 +1,22 @@
+package main
+
+import "fmt"
+import "os"
+
+func main() {
+	userFile := "mujibur.txt"
+	fl, err := os.Open(userFile)
+	if err != nil {
+		fmt.Println(userFile, err)
+		return
+	}
+	defer fl.Close()
+	buf := make([]byte, 1024)
+	for {
+		n, _ := fl.Read(buf)
+		if 0 == n {
+			break
+		}
+		os.Stdout.Write(buf[:n])
+	}
+}
